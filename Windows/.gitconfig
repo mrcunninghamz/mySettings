@@ -1,0 +1,16 @@
+[user]
+	name = Karl Merecido
+	email = karl.merecido@outsell.com
+[diff]
+  tool = vscode-diff
+[difftool "vscode-diff"]
+  cmd = code --wait --diff $LOCAL $REMOTE
+[merge]
+	tool = sourcetree
+[mergetool "sourcetree"]
+	cmd = 'C:/Program Files/SourceGear/Common/DiffMerge/sgdm.exe' -merge -result=\"$MERGED\" \"$LOCAL\" \"$BASE\" \"$REMOTE\"
+	trustExitCode = true
+[core]
+	excludesfile = C:\\Projects\\git\\HiCommand\\.gitignore
+[difftool "sourcetree"]
+	cmd = 'C:/Program Files/SourceGear/Common/DiffMerge/sgdm.exe' \"$LOCAL\" \"$REMOTE\"
