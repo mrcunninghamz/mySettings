@@ -1,0 +1,7 @@
+[user]
+	name = Karl Merecido
+	email = kmerecido@gmail.com
+[merge]
+	tool = kdiff3
+[mergetool "kdiff3"]
+	path = /Applications/kdiff3.app/Contents/MacOS/kdiff3
