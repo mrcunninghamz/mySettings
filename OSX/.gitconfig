@@ -1,7 +1,21 @@
 [user]
 	name = Karl Merecido
 	email = kmerecido@gmail.com
+	
+# Diff with JetBrains Rider
+[diff]
+    tool = rider
+[difftool]
+    prompt = true
+[difftool "rider"]
+    cmd = rider diff \"$LOCAL\" \"$REMOTE\"
+
+# Merge with JetBrains Rider
 [merge]
-	tool = kdiff3
-[mergetool "kdiff3"]
-	path = /Applications/kdiff3.app/Contents/MacOS/kdiff3
+    tool = rider
+[mergetool]
+    prompt = true
+[mergetool "rider"]
+    cmd = rider merge \"$LOCAL\" \"$REMOTE\" \"$BASE\" \"$MERGED\"
+    trustExitCode = true
+
