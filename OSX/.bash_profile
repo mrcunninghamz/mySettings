@@ -1,4 +1,5 @@
-#use brew to install git, git-flow-completion, git-flow-avh
+#reference: https://coombes.nz/blog/posh-git-on-mac/
+#use brew to install git, bash-completion, git-flow-avh
 
 if [ -f $(brew --prefix)/etc/bash_completion ]; then
   . $(brew --prefix)/etc/bash_completion
