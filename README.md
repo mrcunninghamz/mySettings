@@ -48,26 +48,29 @@ Mac/
 
 ### Deploying Configurations
 
-1. Clone this repository to your home directory (or preferred location)
+1. Clone this repository (recommended location: `~/Projects/mySettings`)
 2. Navigate to your OS-specific folder:
    ```bash
-   cd ~/mySettings/Mac  # or Windows, or Linux
+   cd ~/Projects/mySettings/Mac  # or Windows, or Linux
    ```
-3. Deploy a specific package:
+3. Deploy a specific package with explicit target:
    ```bash
-   stow zsh    # Creates ~/.zshrc symlink
-   stow vim    # Creates ~/.vimrc symlink
+   stow -t ~ aerospace   # Creates symlinks in home directory
+   stow -t ~ zsh         # Creates ~/.zshrc symlink
    ```
 4. Deploy all packages:
    ```bash
-   stow */
+   stow -t ~ */
    ```
+
+**Note:** The `-t ~` flag explicitly targets your home directory. Without it, stow creates symlinks in the parent directory of where you run it.
 
 ### Removing Configurations
 
 ```bash
-cd ~/mySettings/Mac
-stow -D zsh    # Removes ~/.zshrc symlink
+cd ~/Projects/mySettings/Mac
+stow -D -t ~ aerospace    # Removes ~/.aerospace.toml symlink
+stow -D -t ~ zsh          # Removes ~/.zshrc symlink
 ```
 
 ### Adding New Configurations
@@ -75,9 +78,9 @@ stow -D zsh    # Removes ~/.zshrc symlink
 1. Navigate to your operating system folder
 2. Create a package directory for the tool (e.g., `mkdir zsh`)
 3. Add configuration files in the structure they should appear in home directory
-4. Test with `stow -n <package>` (dry run)
-5. Deploy with `stow <package>`
-6. Document what each package does
+4. Test with `stow -n -t ~ <package>` (dry run)
+5. Deploy with `stow -t ~ <package>`
+6. Document what each package does in a README.md inside the package
 7. Commit changes with descriptive messages
 
 See [claude.md](./claude.md) for the detailed workflow.

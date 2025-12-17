@@ -23,8 +23,8 @@
 
 2. Deploy configuration:
    ```bash
-   cd ~/mySettings/Mac
-   stow aerospace
+   cd ~/Projects/mySettings/Mac
+   stow -t ~ aerospace
    ```
 
 3. Restart AeroSpace or run:
