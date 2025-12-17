@@ -13,3 +13,6 @@ eval "$(starship init zsh)"
 
 # Completions: https://carapace.sh/
 source <(carapace _carapace)
+
+# Enable vi mode
+bindkey -v
