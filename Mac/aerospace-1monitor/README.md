@@ -1,6 +1,8 @@
-# AeroSpace Configuration
+# AeroSpace Configuration (Single Monitor)
 
 **Tool:** [AeroSpace](https://github.com/nikitabobko/AeroSpace) - A tiling window manager for macOS
+
+**Setup:** Single monitor (Built-in Display)
 
 ## Files
 
@@ -11,7 +13,8 @@
 
 - Tiling window management for macOS
 - Keyboard-driven window control
-- Multi-monitor support
+- Optimized for single monitor setup
+- All workspaces (1-5) assigned to Built-in Display
 - Customizable gaps and layouts
 
 ## Installation
@@ -24,7 +27,13 @@
 2. Deploy configuration:
    ```bash
    cd ~/Projects/mySettings/Mac
-   stow -t ~ aerospace
+   stow -t ~ aerospace-1monitor
+   ```
+
+   **Note:** If you're switching from the 2-monitor configuration, remove it first:
+   ```bash
+   stow -D -t ~ aerospace-2monitor
+   stow -t ~ aerospace-1monitor
    ```
 
 3. Restart AeroSpace or run:

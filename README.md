@@ -55,8 +55,8 @@ Mac/
    ```
 3. Deploy a specific package with explicit target:
    ```bash
-   stow -t ~ aerospace   # Creates symlinks in home directory
    stow -t ~ zsh         # Creates ~/.zshrc symlink
+   stow -t ~ git         # Creates ~/.gitconfig symlink
    ```
 4. Deploy all packages:
    ```bash
@@ -65,12 +65,35 @@ Mac/
 
 **Note:** The `-t ~` flag explicitly targets your home directory. Without it, stow creates symlinks in the parent directory of where you run it.
 
+### Managing Multiple Configurations for the Same Tool
+
+Some tools may have multiple configuration packages for different setups (e.g., different monitor configurations). In these cases:
+
+1. **Only deploy ONE variant at a time**
+2. **Remove the current variant before deploying another**
+
+Example with AeroSpace window manager (1-monitor vs 2-monitor setups):
+
+```bash
+# For single monitor setup
+stow -t ~ aerospace-1monitor
+
+# To switch to dual monitor setup:
+# First, remove the current configuration
+stow -D -t ~ aerospace-1monitor
+
+# Then deploy the dual monitor configuration
+stow -t ~ aerospace-2monitor
+```
+
+**Important:** Never run `stow -t ~ */` if you have multiple variants of the same tool, as this will create conflicts. Deploy packages selectively instead.
+
 ### Removing Configurations
 
 ```bash
 cd ~/Projects/mySettings/Mac
-stow -D -t ~ aerospace    # Removes ~/.aerospace.toml symlink
-stow -D -t ~ zsh          # Removes ~/.zshrc symlink
+stow -D -t ~ aerospace-1monitor    # Removes aerospace symlinks
+stow -D -t ~ zsh                   # Removes ~/.zshrc symlink
 ```
 
 ### Adding New Configurations
