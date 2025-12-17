@@ -9,6 +9,42 @@ A centralized repository for storing operating system configurations and environ
   - Linux: `sudo apt install stow` or `sudo yum install stow`
   - Windows: Use WSL or install via Chocolatey: `choco install stow`
 
+## Installation (macOS)
+
+### 1. Install Core Dependencies
+
+```bash
+# Install GNU Stow (required for configuration management)
+brew install stow
+
+# Install applications and tools
+brew install --cask ghostty aerospace  # Terminal emulator and window manager
+brew install zellij starship carapace  # Terminal workspace, prompt, and completions
+```
+
+### 2. Clone This Repository
+
+```bash
+mkdir -p ~/Documents/Projects/mrcunninghamz
+cd ~/Documents/Projects/mrcunninghamz
+git clone https://github.com/mrcunninghamz/mySettings.git
+cd mySettings
+```
+
+### 3. Deploy Configurations
+
+See the [Deploying Configurations](#deploying-configurations) section below for stow usage.
+
+### Package-Specific Dependencies
+
+Each configuration package has its own README with detailed installation instructions:
+
+- **ghostty** - Requires Ghostty terminal emulator (`brew install --cask ghostty`)
+- **zsh** - Requires Zellij, Starship, Carapace, and Rust/Cargo
+- **zellij** - Requires Zellij terminal workspace manager (`brew install zellij`)
+- **aerospace** - Requires AeroSpace window manager (`brew install --cask aerospace`)
+- **git** - No additional dependencies
+
 ## Purpose
 
 This repository serves as a version-controlled backup and reference for:
