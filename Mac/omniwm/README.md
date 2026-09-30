@@ -8,7 +8,7 @@
 
 - `.config/omniwm/settings.toml` - Main configuration file for OmniWM
 - `.config/omniwm/sidecar-workspace-fixup.sh` - Nudges workspaces onto the right monitor when the Sidecar iPad connects (see "Sidecar workspace fixup" below)
-- `Library/LaunchAgents/com.mysettings.omniwm-sidecar-watch.plist` - Keeps the above script running on every display change
+- `launchagent/com.mysettings.omniwm-sidecar-watch.plist` - Keeps the above script running on every display change. Deployed by copying, not stowing (see "Sidecar workspace fixup" below) - launchd's login-time scan of `~/Library/LaunchAgents` silently skips symlinked plists, so a stowed one never reloads after a restart
 - `bin/omniwm-display-info` - Prints each active display's UUID and points resolution, for adding new `[[monitorDwindleOverrides]]` entries (see "Adding a monitor override" below)
 
 ## Features
@@ -72,13 +72,18 @@ Set `start-at-login = true` back in the aerospace config once you're back on it 
 
 `sidecar-workspace-fixup.sh` works around this: whenever OmniWM fires a `display-changed` IPC event, it checks (`omniwmctl query displays`) whether a Sidecar display is present, and if so nudges workspaces 1-5 onto it and 6-9 back onto the built-in display, using the same temporary runtime override as the in-app "Move Workspace to Monitor" action. It's a no-op when the Sidecar isn't connected. The `left`/`right` directions it uses assume the Sidecar sits physically left of the built-in display in the current routing arrangement - re-check with `omniwmctl query displays --format json` (`frame.x`) if that ever changes.
 
-This requires `ipcEnabled = true` in `settings.toml` (already set) so `omniwmctl` can talk to the running app, and the LaunchAgent to keep a `omniwmctl watch display-changed --reconnect --exec ...` process alive across logins:
+This requires `ipcEnabled = true` in `settings.toml` (already set) so `omniwmctl` can talk to the running app, and the LaunchAgent to keep a `omniwmctl watch display-changed --reconnect --exec ...` process alive across logins.
+
+**The plist is copied, not stowed.** launchd's automatic login-time scan of `~/Library/LaunchAgents` silently skips symlinked plists (manually running `launchctl bootstrap` on a symlink still works, which is what made this easy to miss) - so a stowed/symlinked copy would need re-bootstrapping by hand after every restart. Deploy it as a real file instead:
 
 ```bash
 cd ~/Documents/Projects/kkbae/mySettings/Mac
-stow -R -t ~ omniwm   # symlinks the script and plist into place
+stow -R -t ~ omniwm   # symlinks the script and settings.toml into place
+cp omniwm/launchagent/com.mysettings.omniwm-sidecar-watch.plist ~/Library/LaunchAgents/
 launchctl bootstrap gui/$(id -u) ~/Library/LaunchAgents/com.mysettings.omniwm-sidecar-watch.plist
 ```
+
+Re-run the `cp` (and a `bootout`/`bootstrap` cycle, see below) whenever `launchagent/com.mysettings.omniwm-sidecar-watch.plist` changes in the repo - unlike the stowed files, it won't pick up edits automatically.
 
 To stop it: `launchctl bootout gui/$(id -u)/com.mysettings.omniwm-sidecar-watch`. Logs land in `/tmp/omniwm-sidecar-watch.{out,err}.log`.
 
